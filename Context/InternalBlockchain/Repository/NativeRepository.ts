@@ -1,8 +1,10 @@
 import RepositoryInterface from "./RepositoryInterface";
 //@ts-ignore
-import { Apis, ChainConfig, Manager } from "@r-squared/rsquared-js-ws";
+import { ChainTypes } from "@r-squared/rsquared-js";
 //@ts-ignore
-import { Aes, FetchChain, TransactionBuilder, PrivateKey, ChainStore, ChainTypes } from "@r-squared/rsquared-js";
+import { Apis, ChainConfig } from "@r-squared/rsquared-js-ws";
+//@ts-ignore
+import { Aes, FetchChain, TransactionBuilder, PrivateKey, ChainStore } from "@r-squared/rsquared-js";
 import * as Errors from "context/InternalBlockchain/Errors";
 import { InternalBlockchainConnectionError } from "context/Infrastructure/Errors";
 import Memo from "context/InternalBlockchain/Memo";
@@ -18,8 +20,6 @@ const PREIMAGE_LENGTH = 32;
 
 export default class NativeRepository implements RepositoryInterface {
     private memo: Memo;
-    private _connectionManager: Manager;
-    private assets: Map<string, any> = Map();
 
     public constructor(
         private readonly eesAccount: string,
@@ -30,7 +30,7 @@ export default class NativeRepository implements RepositoryInterface {
     }
 
     public static async init(
-        nodeUrls: string[],
+        nodeUrl: string,
         accountFrom: string,
         accountPrivateKey: string,
         assetSymbol: string,
@@ -39,7 +39,7 @@ export default class NativeRepository implements RepositoryInterface {
         ChainConfig.networks["RSquared"].chain_id = chainId;
         ChainConfig.setChainId(chainId);
         const repository = new NativeRepository(accountFrom, accountPrivateKey, assetSymbol);
-        await repository.connect(nodeUrls);
+        await repository.connect(nodeUrl);
         return repository;
     }
 
@@ -108,7 +108,6 @@ export default class NativeRepository implements RepositoryInterface {
         try {
             await txHtlcCreate.broadcast();
         } catch (e: unknown) {
-            await this.burnAsset(amount);
             throw new Errors.CreateHtlcError();
         }
     }
@@ -181,30 +180,12 @@ export default class NativeRepository implements RepositoryInterface {
         return operations;
     }
 
-    public async connect(nodeUrls: string[]) {
-
-        this._connectionManager = new Manager({
-            url: nodeUrls[0],
-            urls: nodeUrls,
-            closeCb: () => {
-                throw new InternalBlockchainConnectionError(`Can't connect to the url ${nodeUrls.join(",")}`);
-            },
-            optionalApis: {enableOrders: true},
-            urlChangeCallback: (url: string) => {
-                console.log("fallback to new url:", url);
-            }
-        });
-        await this._connectionManager
-            .connectWithFallback(true);
-
+    public async connect(nodeUrl: string) {
         try {
-            await ChainStore.init(false);
+            await Apis.instance(nodeUrl, true).init_promise;
         } catch (e: unknown) {
-            if (e instanceof Error) {
-                throw new InternalBlockchainConnectionError("Can't connect to the blockchain" + e);
-            }
+            throw new InternalBlockchainConnectionError(`Can't connect to the url ${nodeUrl}`);
         }
-
     }
 
     public async disconnect() {
@@ -264,17 +245,11 @@ export default class NativeRepository implements RepositoryInterface {
     }
 
     async getAsset(assetId: string): Promise<Map<string, any>> {
-        if (this.assets.has(assetId)) {
-            return this.assets.get(assetId);
-        }
-
         const [result] = await Apis.instance()
             .db_api()
             .exec("get_assets", [[assetId]]);
 
-        this.assets = this.assets.set(assetId, Map(result));
-
-        return this.assets.get(assetId);
+        return Map(result);
     }
 
     async getAccountHistory(lastProcessedAccountHistoryOperation: string): Promise<WithdrawTransaction[]> {

@@ -25,9 +25,9 @@ export default class ProcessWithdrawContractCreationHandler implements UseCase<P
             throw new Errors.TransactionNotFoundInBlockchain(command.txHash);
         }
 
-        const withdraw = await this.repository.getByHashLock(command.hashLock);
+        const withdraw = await this.repository.getByTxHash(command.txHash);
         if (!withdraw) {
-            throw new Errors.WithdrawNotExists(command.hashLock);
+            throw new Errors.WithdrawNotExists(command.txHash);
         }
 
         const contract = await this.externalBlockchain.repository.loadWithdrawContract(

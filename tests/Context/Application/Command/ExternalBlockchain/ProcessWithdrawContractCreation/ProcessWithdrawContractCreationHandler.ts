@@ -20,7 +20,6 @@ describe("ProcessWithdrawContractCreationHandler", () => {
     let stubRepository: StubRepository;
     let withdrawRepository: WithdrawStubRepository;
     let handler: ProcessWithdrawContractCreationHandler;
-    let hashlock = "";
     let withdraw: Withdraw;
     let txHash = "";
 
@@ -60,7 +59,6 @@ describe("ProcessWithdrawContractCreationHandler", () => {
                 stubRepository._txIncluded = true;
                 withdraw.status = STATUS_SEND_IN_REPLY;
                 const command = new ProcessWithdrawContractCreation(
-                    withdraw.hashlock ?? "",
                     withdraw.txHash ?? "",
                     stubRepository._contract?.contractId ?? ""
                 );
@@ -78,7 +76,7 @@ describe("ProcessWithdrawContractCreationHandler", () => {
         describe("error", () => {
             it("should return error if transaction not found in blockchain", async () => {
                 stubRepository._txIncluded = false;
-                const command = new ProcessWithdrawContractCreation(hashlock, txHash, contractId);
+                const command = new ProcessWithdrawContractCreation(txHash, contractId);
                 await expect(handler.execute(command)).rejectedWith(
                     `The transaction with hash "${txHash}" was not found in blockchain.`
                 );
@@ -87,7 +85,7 @@ describe("ProcessWithdrawContractCreationHandler", () => {
             it("should return error if external contract not exists", async () => {
                 stubRepository._txIncluded = true;
                 stubRepository._contract = null;
-                const command = new ProcessWithdrawContractCreation(hashlock, txHash, contractId);
+                const command = new ProcessWithdrawContractCreation(txHash, contractId);
                 await expect(handler.execute(command)).rejectedWith(
                     `The external contract "${command.contractId}" is not exists in the blockchain.`
                 );
@@ -96,14 +94,14 @@ describe("ProcessWithdrawContractCreationHandler", () => {
             it("should return error if withdraw not exists", async () => {
                 stubRepository._txIncluded = true;
                 txHash = "0x2592cf699903e83bfd664aa4e339388fd044fe31643a85037be803a5d162729g";
-                const command = new ProcessWithdrawContractCreation(hashlock, txHash, contractId);
+                const command = new ProcessWithdrawContractCreation(txHash, contractId);
                 await expect(handler.execute(command)).rejectedWith(`The withdraw with txHash "${txHash}" not exists.`);
             });
 
             it("should return error if withdraw is not ready to sign", async () => {
                 stubRepository._txIncluded = true;
                 withdraw.status = STATUS_READY_TO_SIGN;
-                const command = new ProcessWithdrawContractCreation(hashlock, txHash, contractId);
+                const command = new ProcessWithdrawContractCreation(txHash, contractId);
                 await expect(handler.execute(command)).rejectedWith(
                     `WithdrawId: ${withdraw.id}. Status ${withdraw.status} is invalid.`
                 );
@@ -124,7 +122,7 @@ describe("ProcessWithdrawContractCreationHandler", () => {
                     false,
                     HashZero
                 );
-                const command = new ProcessWithdrawContractCreation(hashlock, txHash, contractId);
+                const command = new ProcessWithdrawContractCreation(txHash, contractId);
                 await expect(handler.execute(command)).rejectedWith(`The sender is invalid.`);
             });
 
@@ -144,11 +142,11 @@ describe("ProcessWithdrawContractCreationHandler", () => {
                     false,
                     HashZero
                 );
-                const command = new ProcessWithdrawContractCreation(hashlock, txHash, contractId);
+                const command = new ProcessWithdrawContractCreation(txHash, contractId);
                 await expect(handler.execute(command)).rejectedWith(
                     `The deposit ${
                         stubRepository._contract?.value
-                    } is too small. Minimum deposit is ${config.eth.minimum_withdraw_amount.toString()}.`
+                    } is to small. Minimum deposit is ${config.eth.minimum_withdraw_amount.toString()}.`
                 );
             });
 
@@ -168,7 +166,7 @@ describe("ProcessWithdrawContractCreationHandler", () => {
                     false,
                     HashZero
                 );
-                const command = new ProcessWithdrawContractCreation(hashlock, txHash, contractId);
+                const command = new ProcessWithdrawContractCreation(txHash, contractId);
                 await expect(handler.execute(command)).rejectedWith(`Contract is already withdrawn.`);
             });
 
@@ -188,7 +186,7 @@ describe("ProcessWithdrawContractCreationHandler", () => {
                     true,
                     HashZero
                 );
-                const command = new ProcessWithdrawContractCreation(hashlock, txHash, contractId);
+                const command = new ProcessWithdrawContractCreation(txHash, contractId);
                 await expect(handler.execute(command)).rejectedWith(`Contract is already refunded.`);
             });
 
@@ -208,7 +206,7 @@ describe("ProcessWithdrawContractCreationHandler", () => {
                     false,
                     "0x1234567890123456789012345678901234567890123456789012345678901234"
                 );
-                const command = new ProcessWithdrawContractCreation(hashlock, txHash, contractId);
+                const command = new ProcessWithdrawContractCreation(txHash, contractId);
                 await expect(handler.execute(command)).rejectedWith(`Preimage is not empty.`);
             });
         });

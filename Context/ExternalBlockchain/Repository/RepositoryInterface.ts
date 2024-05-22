@@ -23,5 +23,4 @@ export default interface RepositoryInterface {
     loadDepositHTLCRefundEvents: (fromBlock: number, toBlock: number) => Promise<EventData[]>;
     getFee(): Promise<number>;
     setFee(fee: number): Promise<string>;
-    rotateProviders(): void;
 }

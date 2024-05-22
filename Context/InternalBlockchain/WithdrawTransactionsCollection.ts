@@ -5,7 +5,6 @@ import WithdrawTransaction from "context/InternalBlockchain/WithdrawTransaction"
 export enum OperationType {
     Create,
     Redeem,
-    Refund,
 }
 
 export class WithdrawTransactionsCollection {
@@ -33,11 +32,6 @@ export class WithdrawTransactionsCollection {
         if (this.isHtlcRedeem(operation) && this.operationType == OperationType.Redeem) {
             this.addHtlcRedeemOperation(operation);
         }
-
-        if (this.isHtlcRefund(operation) && this.operationType == OperationType.Refund) {
-            this.addHtlcRefundOperation(operation);
-        }
-
     }
 
     private isTransfer(operation: any) {
@@ -86,18 +80,6 @@ export class WithdrawTransactionsCollection {
         return true;
     }
 
-    private isHtlcRefund(operation: any) {
-        if (operation.op[0] != ChainTypes.operations.htlc_refund) {
-            return false;
-        }
-
-        if (operation.op[1].to != this.eesAccountId) {
-            return false;
-        }
-
-        return true;
-    }
-
     private addHtlcCreateOperation(operation: any) {
         const transaction = this.getTransaction(operation);
 
@@ -131,12 +113,6 @@ export class WithdrawTransactionsCollection {
     }
 
     private addHtlcRedeemOperation(operation: any) {
-        const transaction = this.getTransaction(operation);
-        transaction.blockNumber = operation.block_num;
-        transaction.htlcId = operation.op[1].htlc_id;
-    }
-
-    private addHtlcRefundOperation(operation: any) {
         const transaction = this.getTransaction(operation);
         transaction.blockNumber = operation.block_num;
         transaction.htlcId = operation.op[1].htlc_id;

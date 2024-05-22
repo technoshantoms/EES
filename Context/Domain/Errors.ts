@@ -70,13 +70,13 @@ export class SenderIsInvalid extends UseCaseError {
 
 export class DepositIsToSmall extends UseCaseError {
     constructor(minValue: string, value: string) {
-        super(`The deposit ${value} is too small. Minimum deposit is ${minValue}.`);
+        super(`The deposit ${value} is to small. Minimum deposit is ${minValue}.`);
     }
 }
 
 export class TimeLockIsToSmall extends UseCaseError {
     constructor(contractTimeLock: string, minMinutes: string) {
-        super(`TimeLock ${contractTimeLock} is too small. Minimum timeLock is ${minMinutes}.`);
+        super(`TimeLock ${contractTimeLock} is to small. Minimum timeLock is ${minMinutes}.`);
     }
 }
 
@@ -159,9 +159,3 @@ export class ReceiverIsSanctioned extends UseCaseError {
 }
 
 export class WithdrawRequestValidationError extends UseCaseError {}
-
-export class WithdrawAmountIsToSmall extends UseCaseError {
-    constructor(minValue: string, value: string) {
-        super(`The withdraw ${value} is too small. Minimum withdraw is ${minValue}.`);
-    }
-}

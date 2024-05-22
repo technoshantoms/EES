@@ -107,6 +107,4 @@ export default class StubRepository implements RepositoryInterface {
     setFee(fee: number): Promise<string> {
         return Promise.resolve("");
     }
-
-    rotateProviders(): void {}
 }

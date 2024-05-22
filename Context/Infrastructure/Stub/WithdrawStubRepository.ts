@@ -2,7 +2,7 @@ import WithdrawRepositoryInterface from "context/Domain/WithdrawRepositoryInterf
 import Withdraw, {
     STATUS_CREATED_IN_INTERNAL_BLOCKCHAIN,
     STATUS_REDEEM_EXECUTED_IN_EXTERNAL_BLOCKCHAIN,
-    STATUS_REDEEMED, STATUS_REFUNDED,
+    STATUS_REDEEMED,
     STATUS_SEND_IN_REPLY,
 } from "context/Domain/Withdraw";
 
@@ -40,16 +40,6 @@ export default class WithdrawStubRepository implements WithdrawRepositoryInterfa
     getByTxHash(txHash: string): Promise<Withdraw | null> {
         for (const withdraw of Object.values(this._withdraws)) {
             if (withdraw.txHash === txHash) {
-                return Promise.resolve(withdraw);
-            }
-        }
-
-        return Promise.resolve(null);
-    }
-
-    getByHashLock(hashLock: string): Promise<Withdraw | null> {
-        for (const withdraw of Object.values(this._withdraws)) {
-            if (withdraw.hashlock === hashLock) {
                 return Promise.resolve(withdraw);
             }
         }
@@ -112,15 +102,6 @@ export default class WithdrawStubRepository implements WithdrawRepositoryInterfa
         });
 
         return Promise.resolve(withdraws);
-    }
-
-    getAllRefundedReadyToBurn(): Promise<Withdraw[]> {
-        const withdraws = Object.values(this._withdraws).filter((withdraw: Withdraw) => {
-            return withdraw.status === STATUS_REFUNDED;
-        });
-
-        return Promise.resolve(withdraws);
-
     }
 
     getByRefundTxHash(txHash: string): Promise<Withdraw | null> {

@@ -15,17 +15,14 @@ const config = {
     eth: {
         providers: {
             infura: {
-                api_keys: (process.env.INFURA_API_KEY as string).split(","),
+                api_key: process.env.INFURA_API_KEY,
             },
-            sepolia: {
-                url: (process.env.SEPOLIA_URL as string).split(","),
-            }
         },
-        provider: process.env.ETH_PROVIDER as string,
+        provider: "infura",
         network: process.env.ETH_NETWORK_NAME as string,
         private_key: process.env.ETH_PRIVATE_KEY as string,
         minimum_deposit_amount: Web3.utils.toBN(Web3.utils.toWei(process.env.MINIMUM_DEPOSIT_AMOUNT as string)),
-        minimum_withdraw_amount: Web3.utils.toBN(Web3.utils.toWei(process.env.MINIMUM_WITHDRAW_AMOUNT as string)),
+        minimum_withdraw_amount: parseFloat(process.env.MINIMUM_DEPOSIT_AMOUNT as string),
         deposit_contract_address: process.env.ETH_DEPOSIT_CONTRACT_ADDRESS as string,
         withdraw_contract_address: process.env.ETH_WITHDRAW_CONTRACT_ADDRESS as string,
         deploy_block_number: parseInt(process.env.ETH_DEPLOY_CONTRACT_BLOCK as string, 10),
@@ -34,7 +31,7 @@ const config = {
         redeem_timeframe: parseInt(process.env.TIMEFRAME_REDEEM_EXTERNAL_BLOCKCHAIN as string, 10),
     },
     r_squared: {
-        node_urls: (process.env.INTERNAL_NODE_URLS as string).split(","),
+        node_url: process.env.INTERNAL_NODE_URL,
         ees_account: process.env.INTERNAL_EES_ACCOUNT as string,
         asset_symbol: process.env.INTERNAL_ASSET_SYMBOL,
         asset_id: process.env.INTERNAL_ASSET_ID,

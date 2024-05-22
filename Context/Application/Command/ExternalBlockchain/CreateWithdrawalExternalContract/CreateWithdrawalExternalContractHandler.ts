@@ -44,14 +44,14 @@ export default class CreateWithdrawalExternalContractHandler
         }
 
         const denormalizedAmount = await this.getDenormalizedContractAmount(withdraw);
-        await this.externalBlockchain.createWithdrawHTLC(
+        const txHash = await this.externalBlockchain.createWithdrawHTLC(
             withdraw.withdrawRequest.addressOfUserInEthereum,
             ensureHasPrefix(withdraw.hashlock as string),
             Math.floor(Date.now() / 1000) + config.contract.withdraw_external_timelock * 60,
             denormalizedAmount
         );
 
-        withdraw.sentInReply();
+        withdraw.sentInReply(txHash);
         await this.withdrawRepository.save(withdraw);
     }
 

@@ -29,9 +29,3 @@ export class RefundUnexpectedError extends ExternalBlockchainError {
         super(`Error while refund contract ${contractId}: ${message}`);
     }
 }
-
-export class UnknownProvider extends ExternalBlockchainError {
-    constructor(provider: string) {
-        super(`Unknown provider ${provider}`);
-    }
-}

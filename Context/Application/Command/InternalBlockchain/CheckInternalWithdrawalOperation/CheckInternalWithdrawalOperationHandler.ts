@@ -11,7 +11,6 @@ import { Map } from "immutable";
 import config from "context/config";
 import AssetNormalizer from "context/Infrastructure/AssetNormalizer";
 import { HardFailError } from "./Errors";
-import Web3 from "web3";
 
 @Injectable()
 export default class CheckInternalWithdrawalOperationHandler
@@ -70,9 +69,7 @@ export default class CheckInternalWithdrawalOperationHandler
             await this.internalBlockchain.getAsset(htlcOperation.get("op")[1].amount.asset_id)
         );
 
-        const contractValue = Web3.utils.toBN(Web3.utils.toWei(normalizedAmount.toString()));
-
-        if (contractValue.cmp(config.eth.minimum_withdraw_amount) < 0) {
+        if (normalizedAmount < config.eth.minimum_withdraw_amount) {
             throw new Errors.InvalidAmount(withdraw);
         }
 
