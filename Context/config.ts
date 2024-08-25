@@ -53,11 +53,13 @@ const config = {
         host: process.env.DATABASE_HOST,
         port: parseInt(process.env.DATABASE_PORT as string, 10),
         user: process.env.DATABASE_USER,
-        password: process.env.DATABASE_PASSWORD,
+        password: process.env.DATABASE_PASSWORD as string,
     },
     rabbitmq: {
         host: process.env.RABBITMQ_HOST as string,
         port: parseInt(process.env.RABBITMQ_PORT as string, 10),
+        user: process.env.RABBITMQ_USER as string,
+        password: process.env.RABBITMQ_PASSWORD as string,
     },
 };
 export default config;

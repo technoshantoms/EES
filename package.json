@@ -51,7 +51,8 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/src/main",
     "test": "NODE_ENV=test mocha -r ts-node/register -r tsconfig-paths/register -r ./tests/index.ts ./tests/Context --recursive --extension ts",
-    "test:integration": "NODE_ENV=test mocha -r ts-node/register -r tsconfig-paths/register -r ./tests/index.ts -r ./tests/Integration/hooks.ts ./tests/Integration --recursive --extension ts"
+    "test:integration": "NODE_ENV=test mocha -r ts-node/register -r tsconfig-paths/register -r ./tests/index.ts -r ./tests/Integration/hooks.ts ./tests/Integration --recursive --extension ts",
+    "typeorm:migration": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d Context/Infrastructure/TypeORM/DataSource/DataSource.ts"
 },
   "dependencies": {
     "@nestjs/cli": "^9.1.1",

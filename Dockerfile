@@ -12,6 +12,9 @@ RUN npm install
 
 COPY . .
 
+RUN npm run build
+COPY src/assets/SanctionedAddresses /var/ees/dist/src/assets/SanctionedAddresses
+
 #RUN ["chmod", "+x", "docker/node/entrypoint.sh"]
 #ENTRYPOINT ["docker/node/entrypoint.sh"]
 

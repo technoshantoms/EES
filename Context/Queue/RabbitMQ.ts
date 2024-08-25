@@ -75,6 +75,8 @@ export default class RabbitMQ implements QueueInterface {
         this.connection = await amqp.connect({
             hostname: config.rabbitmq.host,
             port: config.rabbitmq.port,
+            username: config.rabbitmq.user,
+            password: config.rabbitmq.password,
         });
         this.channel = await this.connection.createChannel();
         await this.channel.assertExchange(EXCHANGE_NAME, EXCHANGE_TYPE, EXCHANGE_OPTION);
