@@ -15,14 +15,17 @@ const config = {
     eth: {
         providers: {
             infura: {
-                api_key: process.env.INFURA_API_KEY,
+                api_keys: (process.env.INFURA_API_KEY as string).split(","),
             },
+            sepolia: {
+                url: (process.env.SEPOLIA_URL as string).split(","),
+            }
         },
-        provider: "infura",
+        provider: process.env.ETH_PROVIDER as string,
         network: process.env.ETH_NETWORK_NAME as string,
         private_key: process.env.ETH_PRIVATE_KEY as string,
         minimum_deposit_amount: Web3.utils.toBN(Web3.utils.toWei(process.env.MINIMUM_DEPOSIT_AMOUNT as string)),
-        minimum_withdraw_amount: parseFloat(process.env.MINIMUM_DEPOSIT_AMOUNT as string),
+        minimum_withdraw_amount: Web3.utils.toBN(Web3.utils.toWei(process.env.MINIMUM_WITHDRAW_AMOUNT as string)),
         deposit_contract_address: process.env.ETH_DEPOSIT_CONTRACT_ADDRESS as string,
         withdraw_contract_address: process.env.ETH_WITHDRAW_CONTRACT_ADDRESS as string,
         deploy_block_number: parseInt(process.env.ETH_DEPLOY_CONTRACT_BLOCK as string, 10),
@@ -31,7 +34,7 @@ const config = {
         redeem_timeframe: parseInt(process.env.TIMEFRAME_REDEEM_EXTERNAL_BLOCKCHAIN as string, 10),
     },
     r_squared: {
-        node_url: process.env.INTERNAL_NODE_URL,
+        node_urls: (process.env.INTERNAL_NODE_URLS as string).split(","),
         ees_account: process.env.INTERNAL_EES_ACCOUNT as string,
         asset_symbol: process.env.INTERNAL_ASSET_SYMBOL,
         asset_id: process.env.INTERNAL_ASSET_ID,
@@ -50,11 +53,13 @@ const config = {
         host: process.env.DATABASE_HOST,
         port: parseInt(process.env.DATABASE_PORT as string, 10),
         user: process.env.DATABASE_USER,
-        password: process.env.DATABASE_PASSWORD,
+        password: process.env.DATABASE_PASSWORD as string,
     },
     rabbitmq: {
         host: process.env.RABBITMQ_HOST as string,
         port: parseInt(process.env.RABBITMQ_PORT as string, 10),
+        user: process.env.RABBITMQ_USER as string,
+        password: process.env.RABBITMQ_PASSWORD as string,
     },
 };
 export default config;

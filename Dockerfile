@@ -6,11 +6,14 @@ COPY docker/node/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 WORKDIR /var/ees
 
 COPY package.json ./
-COPY yarn.lock ./
+COPY package-lock.json ./
 
-RUN yarn
+RUN npm install
 
 COPY . .
+
+RUN npm run build
+COPY src/assets/SanctionedAddresses /var/ees/dist/src/assets/SanctionedAddresses
 
 #RUN ["chmod", "+x", "docker/node/entrypoint.sh"]
 #ENTRYPOINT ["docker/node/entrypoint.sh"]

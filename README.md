@@ -17,6 +17,7 @@ HTTP 200 status and `sessionId` should be received in response
 ```
 yarn typeorm migration:generate -d Context/Infrastructure/TypeORM/DataSource/DataSource.ts Context/Infrastructure/TypeORM/migrations/__migrationName__
 ```
+
 #### Execute migrations
 ```
 yarn typeorm migration:run -d Context/Infrastructure/TypeORM/DataSource/DataSource.ts

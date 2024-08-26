@@ -4,6 +4,7 @@ export default interface WithdrawRepositoryInterface {
     save: (withdraw: Withdraw) => void;
     getAllForCheck: () => Promise<Withdraw[]>;
     getByTxHash: (txHash: string) => Promise<Withdraw | null>;
+    getByHashLock: (hashLock: string) => Promise<Withdraw | null>;
     getById: (id: string) => Promise<Withdraw | null>;
     getByRequestId: (requestId: string) => Promise<Withdraw | null>;
     getByRedeemTxHash: (txHash: string) => Promise<Withdraw | null>;
@@ -12,5 +13,6 @@ export default interface WithdrawRepositoryInterface {
     getByInternalContractId: (contractId: string) => Promise<Withdraw | null>;
     getAllRedeemed: () => Promise<Withdraw[]>;
     getAllReadyToRefund: () => Promise<Withdraw[]>;
+    getAllRefundedReadyToBurn: () => Promise<Withdraw[]>;
     getByRefundTxHash: (txHash: string) => Promise<Withdraw | null>;
 }
