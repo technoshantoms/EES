@@ -29,7 +29,14 @@ const DatabaseConfig: DataSourceOptions = {
     migrations: [path.join(__dirname, "..", "migrations", "*.ts")],
     subscribers: [Subscriber],
     migrationsRun: config.isTest,
-    logging: false,
+    logging: [
+        "error"
+    ],
+    connectTimeout: 30000,
+    extra: {
+        waitForConnections: true,
+        connectionLimit: 20,
+    }
 };
 
 export default DatabaseConfig;

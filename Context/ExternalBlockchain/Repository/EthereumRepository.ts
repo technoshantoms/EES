@@ -67,6 +67,7 @@ export default class EthereumRepository implements RepositoryInterface {
             if (e instanceof Error
                 && (
                     e.message.indexOf('CONNECTION ERROR') >= 0
+                    || e.message.indexOf('project ID request rate exceeded') >= 0
                     || e.message.indexOf('daily request count exceeded') >= 0
                     || e.message.indexOf('Invalid JSON RPC response') >= 0
                     || e.message.indexOf('timeout') >= 0
