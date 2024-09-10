@@ -1,0 +1,1 @@
+{"version":3,"file":"Facade.js","sourceRoot":"","sources":["../../../../Context/Context-ui/Proposal/Facade.ts"],"names":[],"mappings":";;;AACA,yBAAyC;AAIlC,KAAK,UAAU,cAAc,CAChC,WAAoB,EACpB,cAAsB,EACtB,YAAoB;IAEpB,MAAM,OAAO,GAAG,IAAI,SAAM,CAAC,WAAW,EAAE,cAAc,EAAE,YAAY,CAAC,CAAC;IACtE,OAAO,MAAM,gBAAa,CAAC,OAAO,CAAC,OAAO,CAAC,CAAC;AAChD,CAAC;AAPD,wCAOC"}

@@ -1,0 +1,36 @@
+import { Map } from "immutable";
+import { NetworkParameters } from "../types";
+import BlockchainParameterType = NetworkParameters.BlockchainParameterType;
+import ParameterType = NetworkParameters.ParameterType;
+export type ParameterValueType = string | number | boolean;
+export default class NetworkParameter {
+    private _name;
+    private _value;
+    private _newValue;
+    private _description;
+    private _type;
+    private _modified;
+    private _link;
+    private _linkValue;
+    private _children;
+    constructor(_name: string);
+    get name(): string;
+    set value(value: ParameterValueType | null);
+    get value(): ParameterValueType | null;
+    get newValue(): ParameterValueType | null;
+    set newValue(value: ParameterValueType | null);
+    get description(): string | null;
+    set description(value: string | null);
+    get type(): ParameterType | null;
+    set type(value: ParameterType | null);
+    get link(): string | null;
+    set link(value: string | null);
+    get linkValue(): BlockchainParameterType | null;
+    set linkValue(value: BlockchainParameterType | null);
+    get children(): Map<string, NetworkParameter>;
+    set children(value: Map<string, NetworkParameter>);
+    isNormal(): boolean;
+    isLink(): boolean;
+    isGroup(): boolean;
+    isModified(): boolean;
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"SuccessResponse.js","sourceRoot":"","sources":["../../../src/Response/SuccessResponse.ts"],"names":[],"mappings":";;AAAA,MAAqB,eAAe;IAChC,YACY,QAAa,IAAI;QAAjB,UAAK,GAAL,KAAK,CAAY;IAC1B,CAAC;IAEJ,IAAI,IAAI;QACJ,OAAO,IAAI,CAAC,KAAK,CAAC;IACtB,CAAC;IAED,MAAM,CAAC,MAAM,CAAC,OAAY,IAAI;QAC1B,OAAO,IAAI,eAAe,CAAC,IAAI,CAAC,CAAA;IACpC,CAAC;CACJ;AAZD,kCAYC"}

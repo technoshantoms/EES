@@ -1,0 +1,12 @@
+import LoadAll from "./Application/Query/LoadAll/LoadAll";
+import LoadAllHandler from "./Application/Query/LoadAll/LoadAllHandler";
+import GetChanged from "./Application/Query/GetChanged/GetChanged";
+import GetChangedHandler from "./Application/Query/GetChanged/GetChangedHandler";
+import CreateProposal from "./Application/Command/CreateProposal/CreateProposal";
+import CreateProposalHandler from "./Application/Command/CreateProposal/CreateProposalHandler";
+declare const loadAllHandler: LoadAllHandler;
+export { LoadAll, loadAllHandler };
+declare const getChangedHandler: GetChangedHandler;
+export { GetChanged, getChangedHandler };
+declare const createProposalHandler: CreateProposalHandler;
+export { CreateProposal, createProposalHandler };

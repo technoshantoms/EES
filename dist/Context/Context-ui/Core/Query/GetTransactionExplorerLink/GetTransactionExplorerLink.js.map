@@ -1,0 +1,1 @@
+{"version":3,"file":"GetTransactionExplorerLink.js","sourceRoot":"","sources":["../../../../../../Context/Context-ui/Core/Query/GetTransactionExplorerLink/GetTransactionExplorerLink.ts"],"names":[],"mappings":";;AAEA,MAAqB,0BAA0B;IAC3C,YAAoB,QAAiB;QAAjB,aAAQ,GAAR,QAAQ,CAAS;IAAG,CAAC;IAEzC,IAAI,OAAO;QACP,OAAO,IAAI,CAAC,QAAQ,CAAC;IACzB,CAAC;CACJ;AAND,6CAMC"}

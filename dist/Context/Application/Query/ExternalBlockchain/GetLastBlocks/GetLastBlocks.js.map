@@ -1,0 +1,1 @@
+{"version":3,"file":"GetLastBlocks.js","sourceRoot":"","sources":["../../../../../../Context/Application/Query/ExternalBlockchain/GetLastBlocks/GetLastBlocks.ts"],"names":[],"mappings":";;AAAA,MAAqB,aAAa;IAC9B,YACY,YAA2B;QAA3B,iBAAY,GAAZ,YAAY,CAAe;IACpC,CAAC;IAEJ,IAAI,WAAW;QACX,OAAO,IAAI,CAAC,YAAY,CAAC;IAC7B,CAAC;CACJ;AARD,gCAQC"}
