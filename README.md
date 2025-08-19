@@ -8,7 +8,7 @@ Just run `docker compose up -d`
 
 To check that all work fun execute request:
 ```
-curl -i http://localhost:3000/deposit/initialize
+curl -i http://localhost:4000/deposit/initialize
 ```
 HTTP 200 status and `sessionId` should be received in response
 
